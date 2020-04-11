@@ -82,7 +82,7 @@ public class Main{
           break;
         case "-o" :
         case "--output" :
-          x = input(args, x);
+          x = output(args, x);
           break;
         case "-q" :
         case "--quiet" :
