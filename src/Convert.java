@@ -97,4 +97,17 @@ public class Convert implements Runnable{
   public void run(){
     /* TODO: Process images. */
   }
+
+  /**
+   * progress()
+   *
+   * Return the progress of the currently running conversion.
+   *
+   * @return Progress of current conversion, 0.0 indicates zero progress and
+   * 1.0 indicates completion.
+   **/
+  public float progress(){
+    /* TODO: Calculate progress. */
+    return 0.0f;
+  }
 }
