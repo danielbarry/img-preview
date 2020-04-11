@@ -37,6 +37,8 @@ public class Convert{
     SLOW
   }
 
+  private boolean ready;
+
   /**
    * Convert()
    *
@@ -59,8 +61,21 @@ public class Convert{
     int scaleWidth,
     int scaleHeight
   ){
+    ready = false;
     /* TODO: Do something with parameters. */
     /* TODO: Search for specified files. */
+    ready = true;
+  }
+
+  /**
+   * isReady()
+   *
+   * Check whether the class was constructed correctly.
+   *
+   * @return True if ready to begin conversion, otherwise false.
+   **/
+  public boolean isReady(){
+    return ready;
   }
 
   /**
