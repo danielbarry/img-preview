@@ -100,6 +100,23 @@ public class Main{
           break;
       }
     }
+    /* Check if we can actually start conversion */
+    if(input != null){
+      Convert convert = new Convert(
+        format,
+        input,
+        jobs,
+        method,
+        output,
+        speed,
+        scaleWidth,
+        scaleHeight
+      );
+      convert.process();
+    }else{
+      System.err.println("No input images given.");
+      System.exit(0);
+    }
   }
 
   /**
