@@ -44,12 +44,14 @@ public class Convert{
    *
    * Setup the conversion process and search for the specified files.
    *
-   * @param
-   * @param
-   * @param
-   * @param
-   * @param
-   * @param
+   * @param format The desired output format.
+   * @param input An array of input images.
+   * @param jobs The number of jobs to use in processing the images.
+   * @param method The algorithm to use when processing the images.
+   * @param output The output string format.
+   * @param speed The desired speed to run the algorithm (if applicable).
+   * @param scaledWidth The desired output width.
+   * @param scaledHeight The desired output height.
    **/
   public Convert(
     FORMAT format,
