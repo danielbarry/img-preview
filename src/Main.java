@@ -11,6 +11,15 @@ public class Main{
   private final static int VER_MINOR = 1;
   private final static int VER_PATCH = 0;
 
+  private Convert.FORMAT format;
+  private String[] input;
+  private int jobs;
+  private Convert.METHOD method;
+  private String output;
+  private Convert.SPEED speed;
+  private int scaleWidth;
+  private int scaleHeight;
+
   /**
    * main()
    *
@@ -33,6 +42,15 @@ public class Main{
    * @param args The command line arguments.
    **/
   public Main(String[] args){
+    /* Set default values */
+    format = Convert.FORMAT.JPEG;
+    input = null;
+    jobs = 1;
+    method = Convert.METHOD.SCALE;
+    output = "%f-%i-%t";
+    speed = Convert.SPEED.NORMAL;
+    scaleWidth = 256;
+    scaleHeight = 256;
     /* Loop the command line parameters */
     for(int x = 0; x < args.length; x++){
       switch(args[x]){
