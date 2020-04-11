@@ -142,7 +142,8 @@ public class Convert implements Runnable{
     /* Loop until there is no more images waiting to be assigned */
     while(input.size() > 0){
       /* Create threads if possible */
-      while(activeJobs.size() < jobs){
+      while(activeJobs.size() < jobs && input.size() > 0){
+        File in = input.get(0);
         /* Find the process */
         Process proc = null;
         switch(method){
@@ -151,7 +152,7 @@ public class Convert implements Runnable{
             break;
         }
         /* Generate output */
-        String filename = input.get(0).getName();
+        String filename = in.getName();
         String out = output
           .replace("%f", filename)
           .replace("%i", new Integer(++startedTasks).toString())
@@ -159,7 +160,7 @@ public class Convert implements Runnable{
         out += "." + format.getType();
         /* Load data into process */
         proc.setFormat(format);
-        proc.setInput(input.get(0));
+        proc.setInput(in);
         proc.setOutput(new File(out));
         proc.setSpeed(speed);
         proc.setWidth(scaleWidth);
@@ -170,7 +171,7 @@ public class Convert implements Runnable{
         activeProcs.add(proc);
         thread.start();
         /* Get rid of input data */
-        input.remove(0);
+        input.remove(in);
       }
       /* Service threads */
       for(int x = 0; x < activeJobs.size(); x++){
