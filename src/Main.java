@@ -40,16 +40,45 @@ public class Main{
         case "--about" :
           x = about(args, x);
           break;
+        case "-f" :
+        case "--format" :
+          x = format(args, x);
+          break;
+        case "-i" :
+        case "--input" :
+          x = input(args, x);
+          break;
+        case "-j" :
+        case "--jobs" :
+          x = jobs(args, x);
+          break;
         case "-h" :
         case "--help" :
           x = help(args, x);
+          break;
+        case "-m" :
+        case "--method" :
+          x = method(args, x);
+          break;
+        case "-o" :
+        case "--output" :
+          x = input(args, x);
+          break;
+        case "-s" :
+        case "--speed" :
+          x = speed(args, x);
+          break;
+        case "-x" :
+        case "--scale" :
+          x = scale(args, x);
           break;
         case "-v" :
         case "--version" :
           x = version(args, x);
           break;
         default :
-          /* TODO: Parse default parameters. */
+          System.err.println("Unknown param '" + args[x] + "', see '--help'");
+          System.exit(0);
           break;
       }
     }
@@ -74,6 +103,48 @@ public class Main{
     System.out.println("want to pay a high bandwidth for displaying all of");
     System.out.println("the images.");
     System.exit(0);
+    return x;
+  }
+
+  /**
+   * format()
+   *
+   * Set the desired output format.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int format(String[] args, int x){
+    /* TODO: The desired output format. */
+    return x;
+  }
+
+  /**
+   * input()
+   *
+   * Get the input images.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int input(String[] args, int x){
+    /* TODO: Get the input images. */
+    return x;
+  }
+
+  /**
+   * jobs()
+   *
+   * Get a number of jobs to be used during processing.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int jobs(String[] args, int x){
+    /* TODO: Get number of jobs. */
     return x;
   }
 
@@ -124,6 +195,62 @@ public class Main{
     System.out.println("                       img-preview -x width height");
     System.out.println("    -v  --version  Display program version");
     System.exit(0);
+    return x;
+  }
+
+  /**
+   * method()
+   *
+   * Set the method to be used.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int method(String[] args, int x){
+    /* TODO: Set the method to be used. */
+    return x;
+  }
+
+  /**
+   * output()
+   *
+   * The output image format.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int output(String[] args, int x){
+    /* TODO: The output image format. */
+    return x;
+  }
+
+  /**
+   * speed()
+   *
+   * Set the desired conversion speed.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int speed(String[] args, int x){
+    /* TODO: Get the desired conversion speed. */
+    return x;
+  }
+
+  /**
+   * scale)
+   *
+   * Set the desired output scale.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int scale(String[] args, int x){
+    /* TODO: Set the output scale. */
     return x;
   }
 
