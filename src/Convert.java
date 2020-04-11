@@ -94,6 +94,7 @@ public class Convert implements Runnable{
    *
    * The conversion handling thread.
    **/
+  @Override
   public void run(){
     /* TODO: Process images. */
   }
