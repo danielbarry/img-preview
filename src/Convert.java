@@ -12,9 +12,19 @@ public class Convert implements Runnable{
    * The different types of images that we may need to handle.
    **/
   public enum FORMAT{
-    PNG,
-    JPEG,
-    SVG
+    PNG("png"),
+    JPEG("jpg"),
+    SVG("svg");
+
+    private final String type;
+
+    FORMAT(String type){
+      this.type = type;
+    }
+
+    String getType(){
+      return type;
+    }
   }
 
   /**
