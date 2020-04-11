@@ -169,7 +169,26 @@ public class Main{
    * @return The new offset into the command line parameters.
    **/
   private int format(String[] args, int x){
-    /* TODO: The desired output format. */
+    /* Make sure enough parameters exist */
+    if(x + 1 >= args.length){
+      error("Not enough parameters provided.");
+    }
+    /* Perform conversion */
+    ++x;
+    switch(args[x]){
+      case "png" :
+        format = Convert.FORMAT.PNG;
+        break;
+      case "jpeg" :
+        format = Convert.FORMAT.JPEG;
+        break;
+      case "svg" :
+        format = Convert.FORMAT.SVG;
+        break;
+      default :
+        error("Unknown format '" + args[x] + "'.");
+        break;
+    }
     return x;
   }
 
@@ -183,8 +202,41 @@ public class Main{
    * @return The new offset into the command line parameters.
    **/
   private int input(String[] args, int x){
-    /* TODO: Get the input images. */
-    return x;
+    ++x;
+    /* Count input files */
+    int count = 0;
+    for(int i = x; i < args.length; i++){
+      /* Make sure parameter indicator doesn't exist */
+      if(args[i].charAt(0) != '-'){
+        ++count;
+      }else{
+        break;
+      }
+    }
+    /* Make sure there is something to input */
+    if(count < 1){
+      error("No inputs provided.");
+    }
+    /* Create new input array and store */
+    int offset;
+    if(input == null){
+      offset = 0;
+      input = new String[count];
+    }else{
+      offset = input.length;
+      String[] temp = new String[input.length + count];
+      /* Copy existing */
+      for(int i = 0; i < input.length; i++){
+        temp[i] = input[i];
+      }
+      /* Finalize */
+      input = temp;
+    }
+    /* Copy new */
+    for(int i = 0; i < count; i++){
+      input[offset + i] = args[x + i];
+    }
+    return x + count - 1;
   }
 
   /**
@@ -197,7 +249,21 @@ public class Main{
    * @return The new offset into the command line parameters.
    **/
   private int jobs(String[] args, int x){
-    /* TODO: Get number of jobs. */
+    /* Make sure enough parameters exist */
+    if(x + 1 >= args.length){
+      error("Not enough parameters provided.");
+    }
+    /* Perform conversion */
+    ++x;
+    try{
+      jobs = Integer.parseInt(args[x]);
+    }catch(NumberFormatException e){
+      error("Unable to convert number '" + args[x] + "'.");
+    }
+    /* Check output is sane */
+    if(jobs < 1 || jobs > 1024){
+      error("Invalid number of jobs '" + jobs + "'.");
+    }
     return x;
   }
 
@@ -262,7 +328,20 @@ public class Main{
    * @return The new offset into the command line parameters.
    **/
   private int method(String[] args, int x){
-    /* TODO: Set the method to be used. */
+    /* Make sure enough parameters exist */
+    if(x + 1 >= args.length){
+      error("Not enough parameters provided.");
+    }
+    /* Perform conversion */
+    ++x;
+    switch(args[x]){
+      case "scale" :
+        method = Convert.METHOD.SCALE;
+        break;
+      default :
+        error("Unknown method '" + args[x] + "'.");
+        break;
+    }
     return x;
   }
 
@@ -276,7 +355,13 @@ public class Main{
    * @return The new offset into the command line parameters.
    **/
   private int output(String[] args, int x){
-    /* TODO: The output image format. */
+    /* Make sure enough parameters exist */
+    if(x + 1 >= args.length){
+      error("Not enough parameters provided.");
+    }
+    /* Perform conversion */
+    ++x;
+    output = args[x];
     return x;
   }
 
@@ -304,12 +389,31 @@ public class Main{
    * @return The new offset into the command line parameters.
    **/
   private int speed(String[] args, int x){
-    /* TODO: Get the desired conversion speed. */
+    /* Make sure enough parameters exist */
+    if(x + 1 >= args.length){
+      error("Not enough parameters provided.");
+    }
+    /* Perform conversion */
+    ++x;
+    switch(args[x]){
+      case "fast" :
+        speed = Convert.SPEED.FAST;
+        break;
+      case "normal" :
+        speed = Convert.SPEED.NORMAL;
+        break;
+      case "slow" :
+        speed = Convert.SPEED.SLOW;
+        break;
+      default :
+        error("Unknown speed '" + args[x] + "'.");
+        break;
+    }
     return x;
   }
 
   /**
-   * scale)
+   * scale()
    *
    * Set the desired output scale.
    *
@@ -318,7 +422,23 @@ public class Main{
    * @return The new offset into the command line parameters.
    **/
   private int scale(String[] args, int x){
-    /* TODO: Set the output scale. */
+    /* Make sure enough parameters exist */
+    if(x + 1 >= args.length){
+      error("Not enough parameters provided.");
+    }
+    /* Perform conversion */
+    try{
+      ++x;
+      scaleWidth = Integer.parseInt(args[x]);
+      ++x;
+      scaleHeight = Integer.parseInt(args[x]);
+    }catch(NumberFormatException e){
+      error("Unable to convert number '" + args[x] + "'.");
+    }
+    /* Check output is sane */
+    if(scaleWidth < 1 || scaleHeight < 1){
+      error("Invalid scale width or height.");
+    }
     return x;
   }
 
