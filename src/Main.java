@@ -101,8 +101,7 @@ public class Main{
           x = version(args, x);
           break;
         default :
-          System.err.println("Unknown param '" + args[x] + "', see '--help'");
-          System.exit(0);
+          error("Unknown param '" + args[x] + "', see '--help'");
           break;
       }
     }
@@ -119,16 +118,14 @@ public class Main{
         scaleHeight
       );
       if(!convert.isReady()){
-        System.err.println("Unable to start the conversion process.");
-        System.exit(0);
+        error("Unable to start the conversion process.");
       }
       convert.process();
       if(!quiet){
         /* TODO: Display conversion progress. */
       }
     }else{
-      System.err.println("No input images given.");
-      System.exit(0);
+      error("No input images given.");
     }
   }
 
@@ -330,5 +327,17 @@ public class Main{
     System.out.println(VER_MAJOR + "." + VER_MINOR + "." + VER_PATCH);
     System.exit(0);
     return x;
+  }
+
+  /**
+   * error()
+   *
+   * Display an error and then exit the program.
+   *
+   * @param msg The message to be displayed.
+   **/
+  private static void error(String msg){
+    System.err.println("[!!] " + msg);
+    System.exit(0);
   }
 }
