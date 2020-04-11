@@ -11,6 +11,8 @@ A tool for creating interesting low disk-space/bandwidth image previews.
 This is simply a way of making a large image into a smaller image preview, with
 some examples below:
 
-![Fast: Standard Java scaling](doc/scale_128_fast.jpg)
-![Normal: Java render hints enabled](doc/scale_128_normal.jpg)
-![Slow: Progressive scaling](doc/scale_128_slow.jpg)
+|Speed |Image                        |Description              |
+|:----:|:---------------------------:|:------------------------|
+|Fast  |![](doc/scale_128_fast.jpg)  |Standard Java scaling    |
+|Normal|![](doc/scale_128_normal.jpg)|Java render hints enabled|
+|Slow  |![](doc/scale_128_slow.jpg)  |Progressive scaling      |
