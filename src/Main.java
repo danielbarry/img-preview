@@ -122,7 +122,15 @@ public class Main{
       }
       convert.process();
       if(!quiet){
-        /* TODO: Display conversion progress. */
+        /* Display conversion progress */
+        while(convert.progress() < 1.0f){
+          System.out.println("Progress: " + (100.0f * convert.progress()) + "%");
+          try{
+            Thread.sleep(1000);
+          }catch(InterruptedException e){
+            /* Do nothing */
+          }
+        }
       }
     }else{
       error("No input images given.");
