@@ -70,4 +70,13 @@ public interface Process{
    * @return True if the conversion process is ready, otherwise false.
    **/
   public boolean isReady();
+
+  /**
+   * isComplete()
+   *
+   * Check if the conversion is now complete.
+   *
+   * @return True if complete, otherwise false.
+   **/
+  public boolean isComplete();
 }
