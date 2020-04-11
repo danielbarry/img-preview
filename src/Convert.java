@@ -33,7 +33,7 @@ public class Convert implements Runnable{
    * The different supported processing methods.
    **/
   public enum METHOD{
-    SCALE
+    SCALE;
   }
 
   /**
@@ -44,7 +44,7 @@ public class Convert implements Runnable{
   public enum SPEED{
     FAST,
     NORMAL,
-    SLOW
+    SLOW;
   }
 
   private boolean ready;
