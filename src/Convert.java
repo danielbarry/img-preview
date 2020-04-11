@@ -5,7 +5,7 @@ package b.img;
  *
  * Program for handling the batch conversion process.
  **/
-public class Convert{
+public class Convert implements Runnable{
   /**
    * FORMAT
    *
@@ -81,8 +81,20 @@ public class Convert{
   }
 
   /**
+   * process()
+   *
+   * Start the conversion process.
    **/
   public void process(){
+    /* TODO: Start conversion handling thread. */
+  }
+
+  /**
+   * run()
+   *
+   * The conversion handling thread.
+   **/
+  public void run(){
     /* TODO: Process images. */
   }
 }
