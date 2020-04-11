@@ -127,7 +127,7 @@ public class Convert implements Runnable{
    * Start the conversion process.
    **/
   public void process(){
-    /* TODO: Start conversion handling thread. */
+    (new Thread(this)).start();
   }
 
   /**
@@ -137,7 +137,65 @@ public class Convert implements Runnable{
    **/
   @Override
   public void run(){
-    /* TODO: Process images. */
+    ArrayList<Thread> activeJobs = new ArrayList<Thread>();
+    ArrayList<Process> activeProcs = new ArrayList<Process>();
+    /* Loop until there is no more images waiting to be assigned */
+    while(input.size() > 0){
+      /* Create threads if possible */
+      while(activeJobs.size() < jobs){
+        /* Find the process */
+        Process proc = null;
+        switch(method){
+          case SCALE :
+            proc = new ProcessScale();
+            break;
+        }
+        /* Generate output */
+        String filename = input.get(0).getName();
+        String out = output
+          .replace("%f", filename)
+          .replace("%i", new Integer(++startedTasks).toString())
+          .replace("%t", new Long(System.currentTimeMillis()).toString());
+        out += "." + format.getType();
+        /* Load data into process */
+        proc.setFormat(format);
+        proc.setInput(input.get(0));
+        proc.setOutput(new File(out));
+        proc.setSpeed(speed);
+        proc.setWidth(scaleWidth);
+        proc.setHeight(scaleHeight);
+        /* Start process */
+        Thread thread = new Thread((Runnable)proc);
+        activeJobs.add(thread);
+        activeProcs.add(proc);
+        thread.start();
+        /* Get rid of input data */
+        input.remove(0);
+      }
+      /* Service threads */
+      for(int x = 0; x < activeJobs.size(); x++){
+        if(activeProcs.get(x).isComplete()){
+          try{
+            activeJobs.get(x).join();
+          }catch(InterruptedException e){
+            /* Do nothing */
+          }
+          activeJobs.remove(x);
+          activeProcs.remove(x);
+          --x;
+        }
+      }
+    }
+    /* Wait here until the final jobs are done */
+    while(activeJobs.size() > 0){
+      try{
+        activeJobs.get(0).join();
+      }catch(InterruptedException e){
+        /* Do nothing */
+      }
+      activeJobs.remove(0);
+      activeProcs.remove(0);
+    }
   }
 
   /**
