@@ -1,5 +1,8 @@
 package b.img;
 
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  * Convert.java
  *
@@ -47,6 +50,16 @@ public class Convert implements Runnable{
     SLOW;
   }
 
+  private Convert.FORMAT format;
+  private int startedTasks;
+  private int totalTasks;
+  private ArrayList<File> input;
+  private int jobs;
+  private Convert.METHOD method;
+  private String output;
+  private Convert.SPEED speed;
+  private int scaleWidth;
+  private int scaleHeight;
   private boolean ready;
 
   /**
@@ -74,8 +87,26 @@ public class Convert implements Runnable{
     int scaleHeight
   ){
     ready = false;
-    /* TODO: Do something with parameters. */
-    /* TODO: Search for specified files. */
+    /* Store parameters */
+    this.format = format;
+    this.jobs = jobs;
+    this.method = method;
+    this.output = output;
+    this.speed = speed;
+    this.scaleWidth = scaleWidth;
+    this.scaleHeight = scaleHeight;
+    /* Check for files and store */
+    startedTasks = 0;
+    totalTasks = input.length;
+    this.input = new ArrayList<File>();
+    for(int x = 0; x < input.length; x++){
+      File file = new File(input[x]);
+      if(file.exists() || !file.isDirectory()){
+        this.input.add(file);
+      }else{
+        return;
+      }
+    }
     ready = true;
   }
 
