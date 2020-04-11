@@ -19,6 +19,7 @@ public class Main{
   private Convert.SPEED speed;
   private int scaleWidth;
   private int scaleHeight;
+  private boolean quiet;
 
   /**
    * main()
@@ -51,6 +52,7 @@ public class Main{
     speed = Convert.SPEED.NORMAL;
     scaleWidth = 256;
     scaleHeight = 256;
+    quiet = false;
     /* Loop the command line parameters */
     for(int x = 0; x < args.length; x++){
       switch(args[x]){
@@ -82,6 +84,10 @@ public class Main{
         case "--output" :
           x = input(args, x);
           break;
+        case "-q" :
+        case "--quiet" :
+          x = quiet(args, x);
+          break;
         case "-s" :
         case "--speed" :
           x = speed(args, x);
@@ -112,7 +118,14 @@ public class Main{
         scaleWidth,
         scaleHeight
       );
+      if(!convert.isReady()){
+        System.err.println("Unable to start the conversion process.");
+        System.exit(0);
+      }
       convert.process();
+      if(!quiet){
+        /* TODO: Display conversion progress. */
+      }
     }else{
       System.err.println("No input images given.");
       System.exit(0);
@@ -217,6 +230,7 @@ public class Main{
     System.out.println("                       %t = current timestamp");
     System.out.println("                     For example:");
     System.out.println("                       img-preview -o %f-%i");
+    System.out.println("    -q  --quiet    No conversion progress printing");
     System.out.println("    -s  --speed    Desired conversion speed");
     System.out.println("                     Select speed at cost of quality");
     System.out.println("                       fast   = Fast, low quality");
@@ -258,6 +272,20 @@ public class Main{
    **/
   private int output(String[] args, int x){
     /* TODO: The output image format. */
+    return x;
+  }
+
+  /**
+   * quiet()
+   *
+   * Set the quiet flag.
+   *
+   * @param args The command line arguments.
+   * @param x Current offset into the program.
+   * @return The new offset into the command line parameters.
+   **/
+  private int quiet(String[] args, int x){
+    quiet = true;
     return x;
   }
 
