@@ -126,12 +126,22 @@ public class SVG{
   /**
    * toString()
    *
-   * A printable version of this object.
+   * A printable version of this object. This is very slow and should be
+   * avoided, it can consume a lot of RAM!
    *
    * @return A printable version of this object.
    **/
   @Override
   public String toString(){
-    return generate();
+    String elems = "";
+    for(String e : elements){
+      elems += e;
+    }
+    return
+      "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+      "<svg width=\"" + width + "\" height=\"" + height + "\" viewBox=\"0 0 " +
+        width + " " + height + "\" xmlns=\"http://www.w3.org/2000/svg\">" +
+        elems +
+      "</svg>";
   }
 }
