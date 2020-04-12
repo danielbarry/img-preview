@@ -209,6 +209,6 @@ public class Convert implements Runnable{
    * 1.0 indicates completion.
    **/
   public float progress(){
-    return (float)((totalTasks - input.size()) / totalTasks);
+    return (float)(((double)totalTasks - (double)input.size()) / (double)totalTasks);
   }
 }
