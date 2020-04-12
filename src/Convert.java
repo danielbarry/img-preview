@@ -183,7 +183,8 @@ public class Convert implements Runnable{
           }
           activeJobs.remove(x);
           activeProcs.remove(x);
-          --x;
+          /* Start processing another */
+          break;
         }
       }
     }
