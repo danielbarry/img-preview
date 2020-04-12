@@ -129,7 +129,26 @@ public class ProcessScale implements Process, Runnable{
         }
         break;
       case SVG :
-        /* TODO: Handle this case. */
+        /* Perform scalar sampling */
+        SVG svg = null;
+        switch(speed){
+          case FAST :
+            svg = svgFast(img, width, height);
+            break;
+          case NORMAL :
+            svg = svgNormal(img, width, height);
+            break;
+          case SLOW :
+            svg = svgSlow(img, width, height);
+            break;
+          default :
+            System.err.println("(internal) Unsupported speed for SVG conversion.");
+            break;
+        }
+        /* Save if it was generated successfully */
+        if(svg != null){
+          svg.save(output);
+        }
         break;
       default :
         System.err.println("(internal) Unsupported format during save.");
@@ -197,5 +216,61 @@ public class ProcessScale implements Process, Runnable{
       h = h / 2;
     }
     return processNormal(i, width, height);
+  }
+
+  /**
+   * svgFast()
+   *
+   * Perform a fast conversion to scalar SVG format.
+   *
+   * @param input The input image.
+   * @param width The width of the target image.
+   * @param hieght The height of the target image.
+   * @return The processed image.
+   **/
+  private SVG svgFast(BufferedImage input, int width, int height){
+    SVG svg = new SVG(width, height);
+    for(int y = 0; y < height; y++){
+      for(int x = 0; x < width; x++){
+        svg.addRectangle(
+          x,
+          y,
+          1,
+          1,
+          "fill:#" + Integer.toHexString(input.getRGB(x, y) & 0xFFFFFF)
+        );
+      }
+    }
+    return svg;
+  }
+
+  /**
+   * svgNormal()
+   *
+   * Perform a normal conversion to scalar SVG format.
+   *
+   * @param input The input image.
+   * @param width The width of the target image.
+   * @param hieght The height of the target image.
+   * @return The processed image.
+   **/
+  private SVG svgNormal(BufferedImage input, int width, int height){
+    /* TODO: Perform separate conversion. */
+    return svgFast(input, width, height);
+  }
+
+  /**
+   * svgSlow()
+   *
+   * Perform a slow conversion to scalar SVG format.
+   *
+   * @param input The input image.
+   * @param width The width of the target image.
+   * @param hieght The height of the target image.
+   * @return The processed image.
+   **/
+  private SVG svgSlow(BufferedImage input, int width, int height){
+    /* TODO: Perform separate conversion. */
+    return svgFast(input, width, height);
   }
 }
