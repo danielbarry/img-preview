@@ -15,7 +15,7 @@ public class SVG{
   private int width;
   private int height;
   private ArrayList<String> defines;
-  private ArrayList<String> elements;
+  private ArrayList<Element> elements;
 
   /**
    * SVG()
@@ -29,7 +29,7 @@ public class SVG{
     this.width = width;
     this.height = height;
     defines = new ArrayList<String>();
-    elements = new ArrayList<String>();
+    elements = new ArrayList<Element>();
   }
 
   /**
@@ -46,19 +46,6 @@ public class SVG{
   }
 
   /**
-   * addElement()
-   *
-   * Add a raw element in the SVG.
-   *
-   * @param element The raw element to be added.
-   * @return A pointer to this object for stringing commands.
-   **/
-  public SVG addElement(String element){
-    elements.add(element);
-    return this;
-  }
-
-  /**
    * addRectangle()
    *
    * Add a rectangle to the SVG.
@@ -70,15 +57,9 @@ public class SVG{
    * @param style The style to be added the element.
    **/
   public SVG addRectangle(int x, int y, int w, int h, String style){
-    addElement(
-      "<rect " +
-        "x=\"" + x + "\" " +
-        "y=\"" + y + "\" " +
-        "width=\"" + w + "\" " +
-        "height=\"" + h + "\" " +
-        "style=\"" + style + "\" " +
-      "/>"
-    );
+    Element e = new ElementRect(x, y, w, h);
+    e.addStyle(style);
+    elements.add(e);
     return this;
   }
 
@@ -90,7 +71,7 @@ public class SVG{
    * @param index The index to retrieve the element.
    * @return The specific element, otherwise NULL.
    **/
-  public String getElement(int index){
+  public Element getElement(int index){
     if(index > 0 && index < elements.size()){
       return elements.get(index);
     }else{
@@ -105,7 +86,7 @@ public class SVG{
    *
    * @return An array of raw elements.
    **/
-  public ArrayList<String> getElements(){
+  public ArrayList<Element> getElements(){
     return elements;
   }
 
@@ -141,8 +122,8 @@ public class SVG{
         }
         bw.write("</defs>");
       }
-      for(String e : elements){
-        bw.write(e);
+      for(Element e : elements){
+        bw.write(e.toString());
       }
       bw.write("</svg>");
       bw.close();
@@ -161,22 +142,20 @@ public class SVG{
    **/
   @Override
   public String toString(){
-    String elems = "";
-    for(String e : elements){
-      elems += e;
+    String add = "";
+    for(Element e : elements){
+      add += e;
     }
-    String defs = "";
     if(defines.size() > 0){
       for(String d : defines){
-        defs += d;
+        add += d;
       }
     }
     return
       "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
       "<svg width=\"" + width + "\" height=\"" + height + "\" viewBox=\"0 0 " +
         width + " " + height + "\" xmlns=\"http://www.w3.org/2000/svg\">" +
-        defs +
-        elems +
+        add +
       "</svg>";
   }
 }
