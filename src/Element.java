@@ -6,7 +6,7 @@ package b.img;
  * An abstraction of the SVG elements.
  **/
 public abstract class Element{
-  public String style;
+  private String style;
 
   /**
    * addStyle()
@@ -29,6 +29,17 @@ public abstract class Element{
       /* Fail silently */
     }
     return this;
+  }
+
+  /**
+   * getStyle()
+   *
+   * Get all style information.
+   *
+   * @return The style information, otherwise NULL.
+   **/
+  public String getStyle(){
+    return style;
   }
 
   /**

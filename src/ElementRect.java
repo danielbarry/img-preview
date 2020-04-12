@@ -50,8 +50,8 @@ public class ElementRect extends Element{
   @Override
   public String toString(){
     String add = "";
-    if(style != null && style.length() > 0){
-      add += " style=\"" + style + "\"";
+    if(getStyle() != null && getStyle().length() > 0){
+      add += " style=\"" + getStyle() + "\"";
     }
     return "<rect" +
       " x=\"" + x + "\"" +
