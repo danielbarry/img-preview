@@ -302,4 +302,27 @@ public class ProcessScale implements Process, Runnable{
       Math.pow(ib - jb, 2)
     );
   }
+
+  /**
+   * avg()
+   *
+   * Calculate the weighted average between two pixels.
+   *
+   * @oaram i The first pixel representing one more pixels.
+   * @param w The weight of the first pixel based on how many pixels are
+   * represented.
+   * @param j The second pixel representing just itself.
+   **/
+  private int avg(int i, int w, int j){
+    long ir = ((i >> 16) & 0xFF) * w;
+    long ig = ((i >>  8) & 0xFF) * w;
+    long ib = ((i      ) & 0xFF) * w;
+    long jr = (j >> 16) & 0xFF;
+    long jg = (j >>  8) & 0xFF;
+    long jb = (j      ) & 0xFF;
+    long r = (((ir + jr) / (w + 1)) & 0xFF) << 16;
+    long g = (((ig + jg) / (w + 1)) & 0xFF) <<  8;
+    long b = (((ib + jb) / (w + 1)) & 0xFF);
+    return (int)(r | g | b);
+  }
 }
