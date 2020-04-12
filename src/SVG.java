@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class SVG{
   private int width;
   private int height;
+  private ArrayList<String> defines;
   private ArrayList<String> elements;
 
   /**
@@ -27,7 +28,21 @@ public class SVG{
   public SVG(int width, int height){
     this.width = width;
     this.height = height;
+    defines = new ArrayList<String>();
     elements = new ArrayList<String>();
+  }
+
+  /**
+   * addDefine()
+   *
+   * Add a raw definition to the SVG header.
+   *
+   * @param define The raw element to be added.
+   * @return A pointer to this object for stringing commands.
+   **/
+  public SVG addDefine(String define){
+    defines.add(define);
+    return this;
   }
 
   /**
@@ -119,6 +134,13 @@ public class SVG{
       bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
       bw.write("<svg width=\"" + width + "\" height=\"" + height + "\" viewBox=\"0 0 ");
       bw.write(width + " " + height + "\" xmlns=\"http://www.w3.org/2000/svg\">");
+      if(defines.size() > 0){
+        bw.write("<defs>");
+        for(String d : defines){
+          bw.write(d);
+        }
+        bw.write("</defs>");
+      }
       for(String e : elements){
         bw.write(e);
       }
@@ -143,10 +165,17 @@ public class SVG{
     for(String e : elements){
       elems += e;
     }
+    String defs = "";
+    if(defines.size() > 0){
+      for(String d : defines){
+        defs += d;
+      }
+    }
     return
       "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
       "<svg width=\"" + width + "\" height=\"" + height + "\" viewBox=\"0 0 " +
         width + " " + height + "\" xmlns=\"http://www.w3.org/2000/svg\">" +
+        defs +
         elems +
       "</svg>";
   }
