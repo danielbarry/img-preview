@@ -164,7 +164,7 @@ public class ProcessScale implements Process, Runnable{
    *
    * @param input The input image.
    * @param width The width of the target image.
-   * @param hieght The height of the target image.
+   * @param height The height of the target image.
    * @return The processed image.
    **/
   private BufferedImage processFast(BufferedImage input, int width, int height){
@@ -182,7 +182,7 @@ public class ProcessScale implements Process, Runnable{
    *
    * @param input The input image.
    * @param width The width of the target image.
-   * @param hieght The height of the target image.
+   * @param height The height of the target image.
    * @return The processed image.
    **/
   private BufferedImage processNormal(BufferedImage input, int width, int height){
@@ -203,7 +203,7 @@ public class ProcessScale implements Process, Runnable{
    *
    * @param input The input image.
    * @param width The width of the target image.
-   * @param hieght The height of the target image.
+   * @param height The height of the target image.
    * @return The processed image.
    **/
   private BufferedImage processSlow(BufferedImage input, int width, int height){
@@ -225,7 +225,7 @@ public class ProcessScale implements Process, Runnable{
    *
    * @param input The input image.
    * @param width The width of the target image.
-   * @param hieght The height of the target image.
+   * @param height The height of the target image.
    * @return The processed image.
    **/
   private SVG svgFast(BufferedImage input, int width, int height){
@@ -257,7 +257,7 @@ public class ProcessScale implements Process, Runnable{
    *
    * @param input The input image.
    * @param width The width of the target image.
-   * @param hieght The height of the target image.
+   * @param height The height of the target image.
    * @return The processed image.
    **/
   private SVG svgNormal(BufferedImage input, int width, int height){
@@ -293,7 +293,7 @@ public class ProcessScale implements Process, Runnable{
    *
    * @param input The input image.
    * @param width The width of the target image.
-   * @param hieght The height of the target image.
+   * @param height The height of the target image.
    * @return The processed image.
    **/
   private SVG svgSlow(BufferedImage input, int width, int height){
