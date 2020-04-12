@@ -255,7 +255,7 @@ public class ProcessScale implements Process, Runnable{
    * @return The processed image.
    **/
   private SVG svgNormal(BufferedImage input, int width, int height){
-    /* TODO: Perform separate conversion. */
+    /* TODO: Perform binning to reduce file size. */
     return svgFast(input, width, height);
   }
 
@@ -270,7 +270,7 @@ public class ProcessScale implements Process, Runnable{
    * @return The processed image.
    **/
   private SVG svgSlow(BufferedImage input, int width, int height){
-    /* TODO: Perform separate conversion. */
+    /* TODO: Perform linear gradient variant. */
     return svgFast(input, width, height);
   }
 }
