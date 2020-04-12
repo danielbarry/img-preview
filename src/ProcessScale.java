@@ -261,8 +261,29 @@ public class ProcessScale implements Process, Runnable{
    * @return The processed image.
    **/
   private SVG svgNormal(BufferedImage input, int width, int height){
-    /* TODO: Perform binning to reduce file size. */
-    return svgFast(input, width, height);
+    SVG svg = new SVG(width, height);
+    for(int y = 0; y < height; y++){
+      for(int x = 0; x < width; x++){
+        int c = input.getRGB(x, y) & 0xFFFFFF;
+        int a = c;
+        int w = 1;
+        while(w + x < width && dist(c, input.getRGB(x + w, y) & 0xFFFFFF) < 32){
+          a = avg(a, w, input.getRGB(x + w, y) & 0xFFFFFF);
+          ++w;
+        }
+        svg.addElement(
+          new ElementRect(
+            x,
+            y,
+            w,
+            1,
+            "fill:#" + Integer.toHexString(a)
+          )
+        );
+        x += w - 1;
+      }
+    }
+    return svg;
   }
 
   /**
