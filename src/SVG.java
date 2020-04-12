@@ -46,19 +46,14 @@ public class SVG{
   }
 
   /**
-   * addRectangle()
+   * addElement()
    *
-   * Add a rectangle to the SVG.
+   * Add an element to the SVG.
    *
-   * @param x The upper left X location of the element.
-   * @param y The upper left Y location of the element.
-   * @param w The width of the element.
-   * @param h The height of the element.
-   * @param style The style to be added the element.
+   * @param e The element to be added.
+   * @return An instance of this SVG object.
    **/
-  public SVG addRectangle(int x, int y, int w, int h, String style){
-    Element e = new ElementRect(x, y, w, h);
-    e.addStyle(style);
+  public SVG addElement(Element e){
     elements.add(e);
     return this;
   }
