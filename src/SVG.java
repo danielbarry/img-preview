@@ -116,7 +116,13 @@ public class SVG{
     try{
       FileWriter fw = new FileWriter(out.getAbsoluteFile());
       BufferedWriter bw = new BufferedWriter(fw);
-      bw.write(generate());
+      bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
+      bw.write("<svg width=\"" + width + "\" height=\"" + height + "\" viewBox=\"0 0 ");
+      bw.write(width + " " + height + "\" xmlns=\"http://www.w3.org/2000/svg\">");
+      for(String e : elements){
+        bw.write(e);
+      }
+      bw.write("</svg>");
       bw.close();
     }catch(IOException e){
       System.err.println("(internal) Unable to save SVG.");
