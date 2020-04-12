@@ -232,13 +232,17 @@ public class ProcessScale implements Process, Runnable{
     SVG svg = new SVG(width, height);
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
+        int c = input.getRGB(x, y) & 0xFFFFFF;
+        c = ((c & 0x0000F0) >>  4) |
+            ((c & 0x00F000) >>  8) |
+            ((c & 0xF00000) >> 12);
         svg.addElement(
           new ElementRect(
             x,
             y,
             1,
             1,
-            "fill:#" + Integer.toHexString(input.getRGB(x, y) & 0xFFFFFF)
+            "fill:#" + Integer.toHexString(c)
           )
         );
       }
