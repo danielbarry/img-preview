@@ -51,13 +51,13 @@ public class ElementRect extends Element{
   public String toString(){
     String add = "";
     if(style != null && style.length() > 0){
-      add += "style=\"" + style + "\" ";
+      add += " style=\"" + style + "\"";
     }
-    return "<rect " +
-      "x=\"" + x + "\" " +
-      "y=\"" + y + "\" " +
-      "width=\"" + w + "\" " +
-      "height=\"" + h + "\" " +
+    return "<rect" +
+      " x=\"" + x + "\"" +
+      " y=\"" + y + "\"" +
+      " width=\"" + w + "\"" +
+      " height=\"" + h + "\"" +
       add +
     "/>";
   }
