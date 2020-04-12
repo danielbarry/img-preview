@@ -107,9 +107,8 @@ public class SVG{
     try{
       FileWriter fw = new FileWriter(out.getAbsoluteFile());
       BufferedWriter bw = new BufferedWriter(fw);
-      bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
-      bw.write("<svg width=\"" + width + "\" height=\"" + height + "\" viewBox=\"0 0 ");
-      bw.write(width + " " + height + "\" xmlns=\"http://www.w3.org/2000/svg\">");
+      bw.write("<svg width=\"" + width + "\" height=\"" + height + "\" ");
+      bw.write("xmlns=\"http://www.w3.org/2000/svg\">");
       if(defines.size() > 0){
         bw.write("<defs>");
         for(String d : defines){
@@ -147,9 +146,8 @@ public class SVG{
       }
     }
     return
-      "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
-      "<svg width=\"" + width + "\" height=\"" + height + "\" viewBox=\"0 0 " +
-        width + " " + height + "\" xmlns=\"http://www.w3.org/2000/svg\">" +
+      "<svg width=\"" + width + "\" height=\"" + height + "\" " +
+        "xmlns=\"http://www.w3.org/2000/svg\">" +
         add +
       "</svg>";
   }
