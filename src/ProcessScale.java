@@ -279,4 +279,27 @@ public class ProcessScale implements Process, Runnable{
     /* TODO: Perform linear gradient variant. */
     return svgFast(input, width, height);
   }
+
+  /**
+   * dist()
+   *
+   * Calculate the distance between two RGB pixels.
+   *
+   * @param i The first pixel.
+   * @param j The second pixel.
+   * @return The distance between the pixels.
+   **/
+  private double dist(int i, int j){
+    double ir = (i >> 16) & 0xFF;
+    double ig = (i >>  8) & 0xFF;
+    double ib = (i      ) & 0xFF;
+    double jr = (j >> 16) & 0xFF;
+    double jg = (j >>  8) & 0xFF;
+    double jb = (j      ) & 0xFF;
+    return Math.sqrt(
+      Math.pow(ir - jr, 2) +
+      Math.pow(ig - jg, 2) +
+      Math.pow(ib - jb, 2)
+    );
+  }
 }
