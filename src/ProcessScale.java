@@ -465,6 +465,7 @@ public class ProcessScale implements Process, Runnable{
       }
     }
     /* Perform merging */
+    HashSet<Integer> uniqueIds = new HashSet<Integer>();
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
         /* Merge count blocks */
@@ -474,6 +475,7 @@ public class ProcessScale implements Process, Runnable{
             break;
           }
         }
+        uniqueIds.add(block[y][x]);
       }
     }
   }
