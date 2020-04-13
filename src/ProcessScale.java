@@ -392,8 +392,46 @@ public class ProcessScale implements Process, Runnable{
    * @return The processed image.
    **/
   private SVG svgSlow(BufferedImage input, int width, int height){
-    /* TODO: Perform linear gradient variant. */
-    return svgFast(input, width, height);
+    /* Perform blocking */
+    int block[][] = new int[height][];
+    int count = 0;
+    ArrayList<Integer> col = new ArrayList<Integer>();
+    ArrayList<int[]> merge = new ArrayList<int[]>();
+    for(int y = 0; y < height; y++){
+      block[y] = new int[width];
+      for(int x = 0; x < width; x++){
+        int c = input.getRGB(x, y) & 0xFFFFFF;
+        /* Up check */
+        if(
+          y > 0 &&
+          dist(c, input.getRGB(x, y - 1) & 0xFFFFFF) < 32 &&
+          dist(c, col.get(block[y - 1][x])) < 32
+        ){
+          block[y][x] = block[y - 1][x];
+          /* Is merge required? */
+          if(
+            x > 0 &&
+            dist(c, input.getRGB(x - 1, y) & 0xFFFFFF) < 32 &&
+            dist(c, col.get(block[y][x - 1])) < 32
+          ){
+            /* Dominant (to replace), weak (to be replaced) */
+            merge.add(new int[]{block[y][x], block[y][x - 1]});
+          }
+        /* Left check */
+        }else if(
+          x > 0 &&
+          dist(c, input.getRGB(x - 1, y) & 0xFFFFFF) < 32 &&
+          dist(c, col.get(block[y][x - 1])) < 32
+        ){
+          block[y][x] = block[y][x - 1];
+        /* Default */
+        }else{
+          block[y][x] = count;
+          col.add(c);
+          ++count;
+        }
+      }
+    }
   }
 
   /**
