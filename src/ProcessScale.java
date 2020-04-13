@@ -386,13 +386,14 @@ public class ProcessScale implements Process, Runnable{
    * @return The processed image.
    **/
   private SVG svgNormal(BufferedImage input, int width, int height){
+    final int thresh = 32;
     SVG svg = new SVG(width, height);
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
         int c = input.getRGB(x, y) & 0xFFFFFF;
         int a = c;
         int w = 1;
-        while(w + x < width && dist(c, input.getRGB(x + w, y) & 0xFFFFFF) < 32){
+        while(w + x < width && dist(c, input.getRGB(x + w, y) & 0xFFFFFF) < thresh){
           a = avg(a, w, input.getRGB(x + w, y) & 0xFFFFFF);
           ++w;
         }
@@ -422,6 +423,7 @@ public class ProcessScale implements Process, Runnable{
    * @return The processed image.
    **/
   private SVG svgSlow(BufferedImage input, int width, int height){
+    final int thresh = 32;
     /* Perform blocking */
     int block[][] = new int[height][];
     int count = 0;
@@ -434,15 +436,15 @@ public class ProcessScale implements Process, Runnable{
         /* Up check */
         if(
           y > 0 &&
-          dist(c, input.getRGB(x, y - 1) & 0xFFFFFF) < 32 &&
-          dist(c, col.get(block[y - 1][x])) < 32
+          dist(c, input.getRGB(x, y - 1) & 0xFFFFFF) < thresh &&
+          dist(c, col.get(block[y - 1][x])) < thresh
         ){
           block[y][x] = block[y - 1][x];
           /* Is merge required? */
           if(
             x > 0 &&
-            dist(c, input.getRGB(x - 1, y) & 0xFFFFFF) < 32 &&
-            dist(c, col.get(block[y][x - 1])) < 32
+            dist(c, input.getRGB(x - 1, y) & 0xFFFFFF) < thresh &&
+            dist(c, col.get(block[y][x - 1])) < thresh
           ){
             /* Dominant (to replace), weak (to be replaced) */
             merge.add(new int[]{block[y][x], block[y][x - 1]});
@@ -450,8 +452,8 @@ public class ProcessScale implements Process, Runnable{
         /* Left check */
         }else if(
           x > 0 &&
-          dist(c, input.getRGB(x - 1, y) & 0xFFFFFF) < 32 &&
-          dist(c, col.get(block[y][x - 1])) < 32
+          dist(c, input.getRGB(x - 1, y) & 0xFFFFFF) < thresh &&
+          dist(c, col.get(block[y][x - 1])) < thresh
         ){
           block[y][x] = block[y][x - 1];
         /* Default */
