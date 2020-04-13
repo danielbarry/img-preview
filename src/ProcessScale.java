@@ -44,9 +44,13 @@ public class ProcessScale implements Process, Runnable{
                     ((colour & 0x00F000) >>  8) |
                     ((colour & 0xF00000) >> 12);
       children = new HashSet<Integer>();
-      ArrayList<double[]> pts = new ArrayList<double[]>();
       /* Generate bit field */
       mask = new boolean[multi.length][];
+      ArrayList<double[]> pts = new ArrayList<double[]>();
+      int globalX1 = multi[0].length;
+      int globalY1 = -1;
+      int globalX2 = -1;
+      int globalY2 = -1;
       for(int y = 0; y < multi.length; y++){
         int start = -1;
         int end = -1;
@@ -65,6 +69,18 @@ public class ProcessScale implements Process, Runnable{
         }
         /* Search for children */
         if(start >= 0){
+          /* Update global measurements */
+          if(start < globalX1){
+            globalX1 = start;
+          }
+          if(globalY1 < 0){
+            globalY1 = y;
+          }
+          if(end > globalX2){
+            globalX2 = end;
+          }
+          globalY2 = y;
+          /* Check whether there are children */
           for(int x = start; x <= end; x++){
             if(!mask[y][x]){
               children.add(multi[y][x]);
