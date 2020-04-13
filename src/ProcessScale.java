@@ -478,6 +478,13 @@ public class ProcessScale implements Process, Runnable{
         uniqueIds.add(block[y][x]);
       }
     }
+    /* Generate bit fields */
+    BitField[] bf = new BitField[uniqueIds.size()];
+    int bfCount = 0;
+    for(Integer i : uniqueIds){
+      bf[bfCount] = new BitField(block, i, col.get(i));
+      bfCount++;
+    }
   }
 
   /**
