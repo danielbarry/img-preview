@@ -54,10 +54,10 @@ public class ElementRect extends Element{
       add += " style=\"" + getStyle() + "\"";
     }
     return "<rect" +
-      " x=\"" + x + "\"" +
-      " y=\"" + y + "\"" +
-      " width=\"" + w + "\"" +
-      " height=\"" + h + "\"" +
+      " x=\""      + Element.numToString(x) + "\"" +
+      " y=\""      + Element.numToString(y) + "\"" +
+      " width=\""  + Element.numToString(w) + "\"" +
+      " height=\"" + Element.numToString(h) + "\"" +
       add +
     "/>";
   }
