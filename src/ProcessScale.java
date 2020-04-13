@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import javax.imageio.ImageIO;
 
 /**
@@ -13,6 +15,99 @@ import javax.imageio.ImageIO;
  * Scale an image to a given size.
  **/
 public class ProcessScale implements Process, Runnable{
+  /**
+   * ProcessScale.BitField.java
+   *
+   * Generate a bit field for the purpose of generating compact SVG graphics.
+   **/
+  private class BitField{
+    private int id;
+    private int colour;
+    private boolean[][] mask;
+    private HashSet<Integer> children;
+    private Element elem;
+
+    /**
+     * BitField()
+     *
+     * Generate a bit field from a multi-mask.
+     *
+     * @param multi The multi-mask to search for our bit field.
+     * @param id The ID of this bit field.
+     * @param colour Set the colour of the represented object.
+     **/
+    public BitField(int[][] multi, int id, int colour){
+      /* Store variables and initiate variables */
+      this.id = id;
+      this.colour = colour;
+      children = new HashSet<Integer>();
+      ArrayList<double[]> pts = new ArrayList<double[]>();
+      /* Generate bit field */
+      mask = new boolean[multi.length][];
+      for(int y = 0; y < multi.length; y++){
+        int start = -1;
+        int end = -1;
+        /* Store bit field information */
+        mask[y] = new boolean[multi[y].length];
+        for(int x = 0; x < multi[y].length; x++){
+          /* Update bit mask */
+          mask[y][x] = multi[y][x] == id;
+          /* Store information about shape */
+          if(mask[y][x]){
+            if(start < 0){
+              start = x;
+            }
+            end = x;
+          }
+        }
+        /* Search for children */
+        if(start >= 0){
+          for(int x = start; x <= end; x++){
+            if(!mask[y][x]){
+              children.add(multi[y][x]);
+            }
+          }
+        }
+        /* Store polygon points */
+        pts.add(0, new double[]{start, y});
+        pts.add(new double[]{end + 1, y});
+        pts.add(0, new double[]{start, y + 1});
+        pts.add(new double[]{end + 1, y + 1});
+      }
+      /* Generate polygon SVG element */
+      colour = ((colour & 0x0000F0) >>  4) |
+               ((colour & 0x00F000) >>  8) |
+               ((colour & 0xF00000) >> 12);
+      elem = new ElementPoly(
+        (double[][])pts.toArray(),
+        "fill:#" + Integer.toHexString(colour)
+      );
+    }
+
+    /**
+     * getOverlayChildren()
+     *
+     * It's possible that some bit fields overlay this one and they must be
+     * drawn after (on top).
+     *
+     * @return A set of unique children contained within.
+     **/
+    public HashSet<Integer> getOverlayChildren(){
+      return children;
+    }
+
+    /**
+     * getElement()
+     *
+     * Get an element that represents the bit field.
+     *
+     * @return The element representing this bit field.
+     **/
+    public Element getElement(){
+      return elem;
+    }
+  }
+
   private Convert.FORMAT format;
   private BufferedImage input;
   private File output;
