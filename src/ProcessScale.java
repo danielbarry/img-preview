@@ -224,6 +224,7 @@ public class ProcessScale implements Process, Runnable{
         }
         break;
       case SVG :
+        System.out.println("(warning) SVG scaling support is experimental.");
         /* Perform scalar sampling */
         SVG svg = null;
         switch(speed){
