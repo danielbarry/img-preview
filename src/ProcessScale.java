@@ -432,6 +432,18 @@ public class ProcessScale implements Process, Runnable{
         }
       }
     }
+    /* Perform merging */
+    for(int y = 0; y < height; y++){
+      for(int x = 0; x < width; x++){
+        /* Merge count blocks */
+        for(int i = 0; i < merge.size(); i++){
+          if(block[y][x] == merge.get(i)[1]){
+            block[y][x] = merge.get(i)[0];
+            break;
+          }
+        }
+      }
+    }
   }
 
   /**
