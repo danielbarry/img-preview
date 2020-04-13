@@ -485,6 +485,12 @@ public class ProcessScale implements Process, Runnable{
       bf[bfCount] = new BitField(block, i, col.get(i));
       bfCount++;
     }
+    /* TODO: Generate SVG based on layer order. */
+    SVG svg = new SVG(width, height);
+    for(int x = 0; x < bf.length; x++){
+      svg.addElement(bf[x].getElement());
+    }
+    return svg;
   }
 
   /**
