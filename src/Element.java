@@ -53,4 +53,20 @@ public abstract class Element{
   public String toString(){
     return "<!--?-->";
   }
+
+  /**
+   * numToString()
+   *
+   * Convert a number to the smallest version of a String as possible.
+   *
+   * @param v The value to be converted.
+   * @return The String representation of the value.
+   **/
+  public static String numToString(double v){
+    if((double)((int)v) == v){
+      return Integer.toString((int)v);
+    }else{
+      return Double.toString(v);
+    }
+  }
 }
