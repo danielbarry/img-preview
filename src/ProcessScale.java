@@ -93,11 +93,24 @@ public class ProcessScale implements Process, Runnable{
         pts.add(0, new double[]{start, y + 1});
         pts.add(new double[]{end + 1, y + 1});
       }
-      /* Generate polygon SVG element */
-      elem = new ElementPoly(
-        (double[][])pts.toArray(),
-        "fill:#" + Integer.toHexString(colour)
-      );
+      int width = globalX2 - globalX1;
+      int height = globalY2 - globalY1;
+      if(width == 0 || height == 0){
+        /* Generate rectangle SVG element */
+        elem = new ElementRect(
+          globalX1,
+          globalY1,
+          width + 1,
+          height + 1,
+          "fill:#" + Integer.toHexString(colour)
+        );
+      }else{
+        /* Generate polygon SVG element */
+        elem = new ElementPoly(
+          pts.toArray(new double[pts.size()][]),
+          "fill:#" + Integer.toHexString(colour)
+        );
+      }
     }
 
     /**
