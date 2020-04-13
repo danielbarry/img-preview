@@ -40,6 +40,9 @@ public class ProcessScale implements Process, Runnable{
       /* Store variables and initiate variables */
       this.id = id;
       this.colour = colour;
+      this.colour = ((colour & 0x0000F0) >>  4) |
+                    ((colour & 0x00F000) >>  8) |
+                    ((colour & 0xF00000) >> 12);
       children = new HashSet<Integer>();
       ArrayList<double[]> pts = new ArrayList<double[]>();
       /* Generate bit field */
@@ -75,9 +78,6 @@ public class ProcessScale implements Process, Runnable{
         pts.add(new double[]{end + 1, y + 1});
       }
       /* Generate polygon SVG element */
-      colour = ((colour & 0x0000F0) >>  4) |
-               ((colour & 0x00F000) >>  8) |
-               ((colour & 0xF00000) >> 12);
       elem = new ElementPoly(
         (double[][])pts.toArray(),
         "fill:#" + Integer.toHexString(colour)
